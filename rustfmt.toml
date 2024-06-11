@@ -1,0 +1,6 @@
+comment_width = 120
+format_code_in_doc_comments = true
+imports_granularity = "Crate"
+imports_layout = "Vertical"
+group_imports = "One"
+wrap_comments = true
