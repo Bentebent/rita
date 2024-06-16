@@ -1,3 +1,3 @@
 fn main() {
-    rita::run();
+    pollster::block_on(rita::run());
 }
