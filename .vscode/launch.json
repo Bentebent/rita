@@ -11,11 +11,11 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=rita",
+                    "--bin=rita_client",
                     "--package=rita"
                 ],
                 "filter": {
-                    "name": "rita",
+                    "name": "rita_client",
                     "kind": "bin"
                 }
             },
@@ -33,11 +33,11 @@
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=rita",
+                    "--bin=rita_client",
                     "--package=rita"
                 ],
                 "filter": {
-                    "name": "rita",
+                    "name": "rita_client",
                     "kind": "bin"
                 }
             },
