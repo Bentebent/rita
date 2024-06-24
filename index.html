@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" crossorigin>
 
 <head>
     <meta charset="UTF-8">
@@ -13,12 +13,15 @@
     </style>
 </head>
 
-<body id="wasm-example">
+<body id="wasm-example" crossorigin>
   <script type="module">
-      import init from "./pkg/rita.js";
-        window.addEventListener("load", () => {
-            init();
-        });
+    import init, {initThreadPool, run} from "./pkg/rita.js";
+    async function load() {
+        await init();
+        await initThreadPool(navigator.hardwareConcurrency);
+        await run();
+      }
+    window.addEventListener("load", () => load());
   </script>
 </body>
 
