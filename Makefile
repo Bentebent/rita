@@ -7,7 +7,7 @@ build-release:
 	cargo build --release 
 
 build-wasm:
-	wasm-pack build --target web --release
+	rustup run nightly wasm-pack build --target web --release
 
 wasm-chrome:
-	.\chrome.bat "$(ROOT_DIR)index.html"
+	.\chrome.bat

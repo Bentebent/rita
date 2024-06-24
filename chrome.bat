@@ -1,3 +1,1 @@
-set arg1=%1
-
-start chrome.exe --disable-web-security --user-data-dir="C:\temp" %arg1%
+start chrome.exe http://127.0.0.1:9001/
