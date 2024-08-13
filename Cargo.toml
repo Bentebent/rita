@@ -20,6 +20,7 @@ rayon = "1.10.0"
 wgpu = "0.19.3"
 winit = { version = "0.29", features = ["rwh_05"] }
 anyhow = "1.0"
+cgmath = "0.18.0"
 
 [dependencies.image]
 version = "0.24"
