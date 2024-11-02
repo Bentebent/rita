@@ -1,18 +1,53 @@
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
+use winit::event_loop::EventLoop;
+
+mod app;
+mod gfx_state;
+mod input_handler;
+mod render_pipeline;
 mod texture;
 
+fn init_logger() {
+    cfg_if::cfg_if! {
+        if #[cfg(target_arch = "wasm32")] {
+            std::panic::set_hook(Box::new(console_error_panic_hook::hook));
+            console_log::init_with_level(log::Level::Warn).expect("Couldn't initialize logger");
+        } else {
+            env_logger::init();
+        }
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+pub use wasm_bindgen_rayon::init_thread_pool;
+
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+pub async fn run() {
+    init_logger();
+    let event_loop = EventLoop::new().unwrap();
+
+    let mut app = app::Application::new("Rita");
+    event_loop.run_app(&mut app).expect("Failed to run app");
+}
+
+/*
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 use wgpu::util::DeviceExt;
 use winit::{
     event::*,
-    event_loop::EventLoop,
+    event_loop::{
+        ActiveEventLoop,
+        EventLoop,
+    },
     keyboard::{
         KeyCode,
         PhysicalKey,
     },
     window::{
         Window,
-        WindowBuilder,
+        WindowAttributes,
     },
 };
 
@@ -346,7 +381,7 @@ impl<'a> State<'a> {
         camera_uniform.update_view_proj(&camera);
 
         let camera_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("Camera Buffer"),
+            label: Some("Camera Buffer"ur
             contents: bytemuck::cast_slice(&[camera_uniform]),
             usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
         });
@@ -544,13 +579,20 @@ impl<'a> State<'a> {
 #[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen_rayon::init_thread_pool;
 
+fn build_window(event_loop: &impl ActiveEventLoop, title: &str) {
+    event_loop.create_window(Window::default_attributes())
+}
+
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub async fn run() {
     init_logger();
     log::info!("Starting Rita");
 
     let event_loop = EventLoop::new().unwrap();
-    let window = WindowBuilder::new().build(&event_loop).unwrap();
+    let window = event_loop
+        .create_window(Window::default_attributes())
+        .expect("Failed to create window!");
+
     window.set_title("RITA");
 
     #[cfg(target_arch = "wasm32")]
@@ -625,3 +667,4 @@ pub async fn run() {
         }
     };
 }
+*/
